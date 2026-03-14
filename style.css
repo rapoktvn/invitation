@@ -124,6 +124,9 @@ h1 {
   transition: transform 0.15s, box-shadow 0.15s;
   box-shadow: 0 6px 20px rgba(76, 175, 80, 0.45);
   letter-spacing: 1px;
+  max-width: 90vw;
+  word-wrap: break-word;
+  white-space: normal;
 }
 
 #yes-btn:hover {
