@@ -32,6 +32,7 @@ let yesTeasedCount = 0
 
 let noClickCount = 0
 let runawayEnabled = false
+let yesClickable = false
 let musicPlaying = true
 
 const catGif = document.getElementById('cat-gif')
@@ -63,7 +64,7 @@ function toggleMusic() {
 }
 
 function handleYesClick() {
-  if (!runawayEnabled) {
+  if (!yesClickable && !runawayEnabled) {
     // Tease her to try No first
     const msg = yesTeasePokes[Math.min(yesTeasedCount, yesTeasePokes.length - 1)]
     yesTeasedCount++
@@ -90,10 +91,15 @@ function handleNoClick() {
 
   // Grow the Yes button bigger each time
   const currentSize = parseFloat(window.getComputedStyle(yesBtn).fontSize)
-  yesBtn.style.fontSize = `${currentSize * 1.35}px`
+  const maxFontSize = window.innerWidth < 600 ? 55 : 120
+  yesBtn.style.fontSize = `${Math.min(currentSize * 1.35, maxFontSize)}px`
   const padY = Math.min(18 + noClickCount * 5, 60)
-  const padX = Math.min(45 + noClickCount * 10, 120)
+  const padX = Math.min(45 + noClickCount * 10, window.innerWidth < 600 ? 60 : 120)
   yesBtn.style.padding = `${padY}px ${padX}px`
+
+  if (noClickCount >= 6) {
+    yesClickable = true
+  }
 
   // Shrink No button to contrast
   if (noClickCount >= 2) {
