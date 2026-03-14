@@ -39,18 +39,24 @@ const yesBtn = document.getElementById('yes-btn')
 const noBtn = document.getElementById('no-btn')
 const music = document.getElementById('bg-music')
 
-// Autoplay: audio starts muted (bypasses browser policy), unmute immediately
-music.muted = true
+// Autoplay: HTML tag sudah punya autoplay muted, jadi audio langsung jalan muted
+// Kita tinggal unmute secepatnya tanpa perlu panggil .play() lagi
 music.volume = 0.3
-music.play().then(() => {
+music.muted = false // langsung unmute, sering berhasil karena audio sudah "playing"
+
+// Fallback jika browser masih blokir: unmute saat interaksi pertama apapun
+const unmuteOnInteract = () => {
   music.muted = false
-}).catch(() => {
-  // Fallback: unmute on first interaction
-  document.addEventListener('click', () => {
-    music.muted = false
-    music.play().catch(() => { })
-  }, { once: true })
-})
+  music.play().catch(() => {})
+  document.removeEventListener('click', unmuteOnInteract)
+  document.removeEventListener('keydown', unmuteOnInteract)
+  document.removeEventListener('touchstart', unmuteOnInteract)
+}
+if (music.muted || music.paused) {
+  document.addEventListener('click', unmuteOnInteract)
+  document.addEventListener('keydown', unmuteOnInteract)
+  document.addEventListener('touchstart', unmuteOnInteract)
+}
 
 function toggleMusic() {
   if (musicPlaying) {
