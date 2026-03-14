@@ -108,8 +108,9 @@ function handleNoClick() {
   const gifIndex = Math.min(noClickCount, gifStages.length - 1)
   swapGif(gifStages[gifIndex])
 
-  // Runaway starts at click 5
-  if (noClickCount >= noMessages.length - 1 && !runawayEnabled) {
+  // Runaway starts at "You can't catch me anyway 😜" (index 8 = last message)
+  const lastMsgIndex = noMessages.length - 1 // = 8
+  if (noClickCount >= lastMsgIndex && !runawayEnabled) {
     enableRunaway()
     runawayEnabled = true
   }
