@@ -233,3 +233,51 @@ h1 {
   width: 260px;
   height: 260px;
 }
+
+/* Tap to start overlay */
+#start-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  background: rgba(255, 228, 232, 0.6);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#start-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.start-overlay-content {
+  text-align: center;
+  animation: pulseOverlay 1.8s ease-in-out infinite;
+}
+
+.start-icon {
+  font-size: 3.5rem;
+  margin-bottom: 12px;
+}
+
+.start-overlay-content p {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #d63384;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 8px rgba(214, 51, 132, 0.25);
+}
+
+.start-overlay-content span {
+  font-size: 1.2rem;
+}
+
+@keyframes pulseOverlay {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.07); opacity: 0.85; }
+}
